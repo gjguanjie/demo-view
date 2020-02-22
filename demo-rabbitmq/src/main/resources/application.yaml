@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: demo-rabbitmq
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        acknowledge-mode: auto
+
+ spring.rabbitmq.
+server:
+  port: 8800
