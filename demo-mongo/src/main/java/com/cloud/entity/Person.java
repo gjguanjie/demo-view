@@ -1,5 +1,6 @@
 package com.cloud.entity;
 
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
@@ -7,6 +8,8 @@ import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
+import java.util.List;
 
 /**
  * collection="mongodb 对应 collection 名"
@@ -20,6 +23,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
         @CompoundIndex(name = "lastName_age_idx",def = "{'lastName':1, 'age': -1}")
 })*/
 @Document("person")
+@Data
 public class Person {
 
     /**
@@ -52,43 +56,7 @@ public class Person {
     @Transient
     private String word;
 
-    public Long getId() {
-        return id;
-    }
+    private List<Student> studentList;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCellNum() {
-        return cellNum;
-    }
-
-    public void setCellNum(String cellNum) {
-        this.cellNum = cellNum;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public String getWord() {
-        return word;
-    }
-
-    public void setWord(String word) {
-        this.word = word;
-    }
+    private List<Address> addressList;
 }
