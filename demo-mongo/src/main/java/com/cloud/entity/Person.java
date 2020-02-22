@@ -32,6 +32,7 @@ public class Person {
      * 在实际业务中不建议自己设置主键，应交给mongo自己生成，自己可以设置一个业务id，如int型字段，用自己设置的业务id来维护相关联的表。
      */
     @Id
+    @Field("_id")
     private Long id;
 
     /**

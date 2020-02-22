@@ -1,9 +1,9 @@
 package com.cloud;
 
-import com.cloud.entity.Person;
-import com.cloud.entity.User;
-import com.cloud.entity.UserCoupon;
+import com.cloud.entity.*;
+import com.cloud.repository.AddressRepository;
 import com.cloud.repository.PersonRepository;
+import com.cloud.repository.StudentRepository;
 import com.mongodb.BasicDBObject;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.aggregation.LookupOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -33,6 +34,12 @@ public class DemoMongoApplicationTests {
 
     @Resource
     private PersonRepository personRepository;
+
+    @Resource
+    private AddressRepository addressRepository;
+
+    @Resource
+    private StudentRepository studentRepository;
 
     @Resource
     private MongoTemplate mongoTemplate;
@@ -56,6 +63,34 @@ public class DemoMongoApplicationTests {
     }
 
     @Test
+    public void saveAddress() {
+        Address address = new Address();
+        address.setCity("连云港");
+        address.setProvince("江苏");
+        address.setNum("0002");
+        /*Person person = new Person();
+        person.setId(1L);
+        person.setAge(1);
+        person.setCellNum("123456789011");
+        person.setLastName("123");
+        person.setWord("11");
+        List<Person> people = new ArrayList<>();
+        people.add(person);
+        address.setPersonList(people);*/
+        address.setPersonId(1L);
+        addressRepository.save(address);
+    }
+
+    @Test
+    public void saveStudent() {
+        Student student = new Student();
+        student.setPersonId(4L);
+        student.setSchool("光明小学");
+        student.setAddressNum("0002");
+        studentRepository.save(student);
+    }
+
+    @Test
     public void find() {
         Person person = new Person();
         person.setCellNum("123456789011");
@@ -67,29 +102,6 @@ public class DemoMongoApplicationTests {
         Pageable pageable = PageRequest.of(0,10);
         Page<Person> page = personRepository.findAll(example,pageable);
         System.out.println(page.getNumber());
-    }
-
-    @Test
-    public void update() {
-        UserCoupon coupon = new UserCoupon();
-        Sort sort = Sort.by(Sort.Direction.DESC,"create_time");
-        Pageable pageable = PageRequest.of(0,10);
-        LookupOperation lookupOperation = LookupOperation.newLookup()
-                .from("t_user")         //从集合对象
-                .localField("user_id")      //主表关联字段
-                .foreignField("_id")        //从表关联字段
-                .as("userList");
-        Criteria criteriaMain = new Criteria();
-        if (!StringUtils.isEmpty(coupon)) {
-            Criteria c1 = Criteria.where("coupon_id").is(coupon.getCouponId());
-            Criteria c2 = Criteria.where("shop_id").is(coupon.getCouponId());
-            criteriaMain.andOperator(c1,c2);
-        }
-        AggregationOperation main = Aggregation.match(criteriaMain);
-        Aggregation aggregationCount = Aggregation.newAggregation(main,lookupOperation); //查总数，不分页
-        Aggregation aggregationPage = Aggregation.newAggregation(main,lookupOperation,Aggregation.skip(0),Aggregation.limit(10)); //分页
-        int count = mongoTemplate.aggregate(aggregationCount,"t_user_coupon", UserCoupon.class).getMappedResults().size();
-        List<UserCoupon> list = mongoTemplate.aggregate(aggregationPage,"t_user_coupon",UserCoupon.class).getMappedResults();
     }
 
     @Test
@@ -110,6 +122,77 @@ public class DemoMongoApplicationTests {
         userCoupon.setDrawSource("LOCAL");
         userCoupon.setShopId("770001");
         userCoupon.setUserId(queryUser.get(0).getId());
+        mongoTemplate.save(userCoupon);
+        System.out.println();
     }
+
+    /**
+     * 一个主表，与多个子表关联查询
+     * db.person.aggregate([
+     *     {
+     *         $lookup:
+     *         {
+     *             from: "student",
+     *             localField: "_id",
+     *             foreignField: "person_id",
+     *             as: "studentList"
+     *         }
+     *
+     *     }
+     * ])
+     */
+    @Test
+    public void treeAggregation() {
+        LookupOperation studentOperation= LookupOperation.newLookup().
+                from("student").             //从表名
+                localField("_id").           //主集合关联字段
+                foreignField("person_id").   //从集合关联字段
+                as("studentList");           //查询结果名
+
+        LookupOperation addressOperation = LookupOperation.newLookup().
+                from("address").             //从表名
+                localField("_id").           //主集合关联字段
+                foreignField("person_id").   //从集合关联字段
+                as("addressList");           //查询结果名
+        Criteria criteria = Criteria.where("cell_num").regex("123456789011").and("age").is(1);//只查询名字中带有文的
+        AggregationOperation match= Aggregation.match(criteria);
+        Aggregation query = Aggregation.newAggregation(match,studentOperation,addressOperation);
+        //Aggregation query = Aggregation.newAggregation(match,studentOperation);
+        List<Person> results = mongoTemplate.aggregate(query,"person", Person.class).getMappedResults();
+        System.out.println();
+    }
+
+    /**
+     *
+     * db.t_user_coupon.aggregate([
+     *     {
+     *         $lookup: {
+     *                from: "t_user",
+     *                localField: "user_id",
+     *                foreignField: "_id",
+     *                as: "userList"
+     *              }
+     *     },{
+     *         $match: {
+     *             "coupon_id":"9900001",
+     *             "shop_id":"770001"
+     *         }
+     *     }
+     * ])
+     */
+    @Test
+    public void queryUserCoupon() {
+        LookupOperation lookupOperation = LookupOperation.newLookup()
+                .from("t_user")         //从集合对象
+                .localField("user_id")   //主集合关联字段
+                .foreignField("_id")     // 从集合关联字段
+                .as("userList");
+        Criteria criteriaMain = Criteria.where("coupon_id").is("9900001").and("shop_id").is("770001");
+        AggregationOperation main = Aggregation.match(criteriaMain);
+        Aggregation aggregationCount = Aggregation.newAggregation(main,lookupOperation);
+        List<UserCoupon> list = mongoTemplate.aggregate(aggregationCount,"t_user_coupon",UserCoupon.class).getMappedResults();
+        System.out.println();
+    }
+
 
 }
