@@ -5,16 +5,16 @@
     <parent>
         <!--<groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.4.RELEASE</version>
-        <relativePath/>-->
+        <version>2.2.5.RELEASE</version>
+        <relativePath/> -->
         <groupId>com.cloud</groupId>
         <artifactId>demo-view</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <groupId>com.cloud</groupId>
-    <artifactId>demo-rabbitmq</artifactId>
+    <artifactId>demo-flowable</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>demo-rabbitmq</name>
+    <name>demo-flowable</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -23,14 +23,29 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.1</version>
         </dependency>
 
+        <!--<dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -41,11 +56,6 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.amqp</groupId>
-            <artifactId>spring-rabbit-test</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

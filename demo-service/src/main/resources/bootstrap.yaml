@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: demo-service
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        enabled: true
+        server-addr: 192.168.56.102:31048
+        service: ${spring.application.name}
+        register-enabled: true
+      config:
+        enabled: true
+        group: dev
+        server-addr: 192.168.56.102:31048
+        file-extension: yaml
+        prefix: demo-service

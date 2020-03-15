@@ -5,16 +5,16 @@
     <parent>
         <!--<groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.4.RELEASE</version>
-        <relativePath/>-->
+        <version>2.2.5.RELEASE</version>
+        <relativePath/> -->
         <groupId>com.cloud</groupId>
         <artifactId>demo-view</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <groupId>com.cloud</groupId>
-    <artifactId>demo-rabbitmq</artifactId>
+    <artifactId>demo-saga-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>demo-rabbitmq</name>
+    <name>demo-saga-service</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -23,12 +23,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>
@@ -43,9 +39,12 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.springframework.amqp</groupId>
-            <artifactId>spring-rabbit-test</artifactId>
-            <scope>test</scope>
+            <groupId>org.apache.servicecomb.pack</groupId>
+            <artifactId>omega-spring-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.servicecomb.pack</groupId>
+            <artifactId>omega-transport-resttemplate</artifactId>
         </dependency>
     </dependencies>
 

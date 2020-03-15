@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.dao.ProcessModelMapper">
+  <resultMap id="BaseResultMap" type="com.cloud.entity.ProcessModel">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="process_instance_id" jdbcType="VARCHAR" property="processInstanceId" />
+    <result column="process_definition_key" jdbcType="VARCHAR" property="processDefinitionKey" />
+    <result column="business_key" jdbcType="VARCHAR" property="businessKey" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+    <result column="task_name" jdbcType="VARCHAR" property="taskName" />
+    <result column="activity_id" jdbcType="VARCHAR" property="activityId" />
+    <result column="assignee_user" jdbcType="VARCHAR" property="assigneeUser" />
+    <result column="assignee_group" jdbcType="VARCHAR" property="assigneeGroup" />
+    <result column="buss_flow_state" jdbcType="VARCHAR" property="bussFlowState" />
+    <result column="buss_entity_cachekey" jdbcType="VARCHAR" property="bussEntityCachekey" />
+    <result column="buss_entity" jdbcType="VARCHAR" property="bussEntity" />
+    <result column="business_operate" jdbcType="VARCHAR" property="businessOperate" />
+    <result column="create__date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="delate_flag" jdbcType="VARCHAR" property="delateFlag" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, process_instance_id, process_definition_key, business_key, task_id, task_name, 
+    activity_id, assignee_user, assignee_group, buss_flow_state, buss_entity_cachekey, 
+    buss_entity, business_operate, create__date, update_date, delate_flag
+  </sql>
+  <select id="selectByExample" parameterType="com.cloud.entity.ProcessModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_process_model
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.cloud.entity.ProcessModelExample">
+    delete from t_process_model
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cloud.entity.ProcessModel">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT nextval('seq_process_model')
+    </selectKey>
+    insert into t_process_model (id,process_instance_id, process_definition_key,
+      business_key, task_id, task_name, 
+      activity_id, assignee_user, assignee_group, 
+      buss_flow_state, buss_entity_cachekey, buss_entity, 
+      business_operate, create__date, update_date, 
+      delate_flag)
+    values (nextval('seq_process_model'),#{processInstanceId,jdbcType=VARCHAR}, #{processDefinitionKey,jdbcType=VARCHAR},
+      #{businessKey,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{taskName,jdbcType=VARCHAR}, 
+      #{activityId,jdbcType=VARCHAR}, #{assigneeUser,jdbcType=VARCHAR}, #{assigneeGroup,jdbcType=VARCHAR}, 
+      #{bussFlowState,jdbcType=VARCHAR}, #{bussEntityCachekey,jdbcType=VARCHAR}, #{bussEntity,jdbcType=VARCHAR}, 
+      #{businessOperate,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{delateFlag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cloud.entity.ProcessModel">
+    insert into t_process_model
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="processInstanceId != null">
+        process_instance_id,
+      </if>
+      <if test="processDefinitionKey != null">
+        process_definition_key,
+      </if>
+      <if test="businessKey != null">
+        business_key,
+      </if>
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="taskName != null">
+        task_name,
+      </if>
+      <if test="activityId != null">
+        activity_id,
+      </if>
+      <if test="assigneeUser != null">
+        assignee_user,
+      </if>
+      <if test="assigneeGroup != null">
+        assignee_group,
+      </if>
+      <if test="bussFlowState != null">
+        buss_flow_state,
+      </if>
+      <if test="bussEntityCachekey != null">
+        buss_entity_cachekey,
+      </if>
+      <if test="bussEntity != null">
+        buss_entity,
+      </if>
+      <if test="businessOperate != null">
+        business_operate,
+      </if>
+      <if test="createDate != null">
+        create__date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="delateFlag != null">
+        delate_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="processInstanceId != null">
+        #{processInstanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="processDefinitionKey != null">
+        #{processDefinitionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="businessKey != null">
+        #{businessKey,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null">
+        #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskName != null">
+        #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityId != null">
+        #{activityId,jdbcType=VARCHAR},
+      </if>
+      <if test="assigneeUser != null">
+        #{assigneeUser,jdbcType=VARCHAR},
+      </if>
+      <if test="assigneeGroup != null">
+        #{assigneeGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="bussFlowState != null">
+        #{bussFlowState,jdbcType=VARCHAR},
+      </if>
+      <if test="bussEntityCachekey != null">
+        #{bussEntityCachekey,jdbcType=VARCHAR},
+      </if>
+      <if test="bussEntity != null">
+        #{bussEntity,jdbcType=VARCHAR},
+      </if>
+      <if test="businessOperate != null">
+        #{businessOperate,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delateFlag != null">
+        #{delateFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cloud.entity.ProcessModelExample" resultType="java.lang.Long">
+    select count(*) from t_process_model
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_process_model
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.processInstanceId != null">
+        process_instance_id = #{record.processInstanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.processDefinitionKey != null">
+        process_definition_key = #{record.processDefinitionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessKey != null">
+        business_key = #{record.businessKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskId != null">
+        task_id = #{record.taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskName != null">
+        task_name = #{record.taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityId != null">
+        activity_id = #{record.activityId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assigneeUser != null">
+        assignee_user = #{record.assigneeUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assigneeGroup != null">
+        assignee_group = #{record.assigneeGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bussFlowState != null">
+        buss_flow_state = #{record.bussFlowState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bussEntityCachekey != null">
+        buss_entity_cachekey = #{record.bussEntityCachekey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bussEntity != null">
+        buss_entity = #{record.bussEntity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessOperate != null">
+        business_operate = #{record.businessOperate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create__date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delateFlag != null">
+        delate_flag = #{record.delateFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_process_model
+    set id = #{record.id,jdbcType=BIGINT},
+      process_instance_id = #{record.processInstanceId,jdbcType=VARCHAR},
+      process_definition_key = #{record.processDefinitionKey,jdbcType=VARCHAR},
+      business_key = #{record.businessKey,jdbcType=VARCHAR},
+      task_id = #{record.taskId,jdbcType=VARCHAR},
+      task_name = #{record.taskName,jdbcType=VARCHAR},
+      activity_id = #{record.activityId,jdbcType=VARCHAR},
+      assignee_user = #{record.assigneeUser,jdbcType=VARCHAR},
+      assignee_group = #{record.assigneeGroup,jdbcType=VARCHAR},
+      buss_flow_state = #{record.bussFlowState,jdbcType=VARCHAR},
+      buss_entity_cachekey = #{record.bussEntityCachekey,jdbcType=VARCHAR},
+      buss_entity = #{record.bussEntity,jdbcType=VARCHAR},
+      business_operate = #{record.businessOperate,jdbcType=VARCHAR},
+      create__date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      delate_flag = #{record.delateFlag,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

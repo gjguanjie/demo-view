@@ -2,14 +2,37 @@ spring:
   application:
     name: demo-rabbitmq
   rabbitmq:
-    host: 127.0.0.1
+    host: 192.168.56.100
     port: 5672
-    username: guest
-    password: guest
+    username: test
+    password: test
     listener:
       simple:
         acknowledge-mode: auto
+        concurrency: 10                       #启用10个线程
+        max-concurrency: 10                   #最大并发也是10
+        prefetch: 1                           #每个线程每次抓取一个消息，尽量不要设置过大，因为防止消息来不及消费
+        auto-startup: true                    #自动启动
+        default-requeue-rejected: true        #消息失败重新加入队列
+        ## 监听消息重试配置
+        retry:
+          enabled: true                       #重试
+          max-attempts: 3                     #重试3次
+          initial-interval: 1000ms            #第一次重试1s以后
+          multiplier: 5                       #间隔系数，即第一次要5s以后  第二次10s
+          max-interval: 10000ms               #最大重试间隔， 当设10s时，不会发生第三次重试
+    virtual-host: /test
+    publisher-confirm-type: correlated
+    template:
+      mandatory: true   # 该参数用于，当信息发送失败时，会返回给生产者，若设为false，那么消息直接丢掉，而不返回生产者。
+      ## 发送重试
+      retry:
+        enabled: true
+        max-attempts: 3                     #重试3次
+        initial-interval: 1000ms            #第一次重试1s以后
+        multiplier: 5                       #间隔系数，即第一次要5s以后  第二次10s
+        max-interval: 10000ms               #最大重试间隔， 当设10s时，不会发生第三次重试
 
- spring.rabbitmq.
+
 server:
   port: 8800
