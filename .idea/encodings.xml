@@ -5,10 +5,12 @@
     <file url="file://$PROJECT_DIR$/demo-common" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/demo-elastic" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/demo-flowable" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/demo-gateway" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/demo-mongo" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/demo-mongo-reative" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/demo-nacos" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/demo-rabbitmq" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/demo-redis" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/demo-retry" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/demo-saga-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/demo-saga-start" charset="UTF-8" />

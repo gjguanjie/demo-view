@@ -9,10 +9,12 @@
         <module name="demo-common" />
         <module name="demo-elastic" />
         <module name="demo-flowable" />
+        <module name="demo-gateway" />
         <module name="demo-mongo" />
         <module name="demo-mongo-reative" />
         <module name="demo-nacos" />
         <module name="demo-rabbitmq" />
+        <module name="demo-redis" />
         <module name="demo-retry" />
         <module name="demo-saga-service" />
         <module name="demo-saga-start" />
@@ -25,10 +27,12 @@
       <module name="demo-common" options="-parameters" />
       <module name="demo-elastic" options="-parameters" />
       <module name="demo-flowable" options="-parameters" />
+      <module name="demo-gateway" options="-parameters" />
       <module name="demo-mongo" options="-parameters" />
       <module name="demo-mongo-reative" options="-parameters" />
       <module name="demo-nacos" options="-parameters" />
       <module name="demo-rabbitmq" options="-parameters" />
+      <module name="demo-redis" options="-parameters" />
       <module name="demo-retry" options="-parameters" />
       <module name="demo-saga-service" options="-parameters" />
       <module name="demo-saga-start" options="-parameters" />
