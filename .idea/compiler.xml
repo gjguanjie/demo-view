@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="demo-common" />
         <module name="demo-elastic" />
+        <module name="demo-eureka" />
         <module name="demo-flowable" />
         <module name="demo-gateway" />
         <module name="demo-mongo" />
@@ -26,6 +27,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="demo-common" options="-parameters" />
       <module name="demo-elastic" options="-parameters" />
+      <module name="demo-eureka" options="-parameters" />
       <module name="demo-flowable" options="-parameters" />
       <module name="demo-gateway" options="-parameters" />
       <module name="demo-mongo" options="-parameters" />

@@ -1,0 +1,50 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: deme-gateway
+server:
+  servlet:
+    context-path: /gateway
+  port: 9999
+---
+spring:
+  profiles: dev
+  cloud:
+    gateway:
+      enabled: true
+      routes:
+      - id: demo-service
+        uri: lb://demo-service
+        predicates:
+        - Path=/gateway/demo-service/**
+        filters:
+        - StripPrefix=1
+        - name: RequestRateLimiter
+          args:
+            key-resolver: '#{@apiKeyResolver}'
+            redis-rate-limiter.replenishRate: 1
+            redis-rate-limiter.burstCapacity: 3
+  redis:
+    host: 49.232.50.211
+    port: 6379
+    password: guanjie0123
+    database: 15
+eureka:
+  client:
+    enabled: true
+    fetch-registry: true
+    refresh:
+      enable: true
+    register-with-eureka: true
+    registry-fetch-interval-seconds: 30
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    lease-expiration-duration-in-seconds: 90
+    lease-renewal-interval-in-seconds: 30
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    prefer-ip-address: true
+  server:
+    enable-self-preservation: false
+    expected-client-renewal-interval-seconds: 30

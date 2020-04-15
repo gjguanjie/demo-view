@@ -3,6 +3,13 @@ spring:
     name: demo-service
   profiles:
     active: dev
+server:
+  port: 8000
+  servlet:
+    context-path: /demo-service
+---
+spring:
+  profiles: nacos
   cloud:
     nacos:
       discovery:
