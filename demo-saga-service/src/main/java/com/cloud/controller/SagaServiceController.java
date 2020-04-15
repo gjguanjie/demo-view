@@ -26,5 +26,10 @@ public class SagaServiceController {
         sagaService.test();
     }
 
+    @PostMapping("tccTest")
+    public void tccTest(){
+        sagaService.tccTest();
+    }
+
 
 }
