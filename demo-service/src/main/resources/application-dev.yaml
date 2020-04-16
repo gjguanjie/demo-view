@@ -16,3 +16,10 @@ eureka:
   server:
     enable-self-preservation: false
     expected-client-renewal-interval-seconds: 30
+spring:
+  datasource:
+    url: jdbc:postgresql://49.232.50.211:5432/postgres
+    username: postgres
+    password: guanjie0123
+    driverClassName: org.postgresql.Driver
+    initialization-mode: always
