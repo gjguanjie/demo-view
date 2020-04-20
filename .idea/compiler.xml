@@ -16,6 +16,7 @@
         <module name="demo-nacos" />
         <module name="demo-rabbitmq" />
         <module name="demo-redis" />
+        <module name="demo-redisson" />
         <module name="demo-retry" />
         <module name="demo-saga-service" />
         <module name="demo-saga-start" />
@@ -35,6 +36,7 @@
       <module name="demo-nacos" options="-parameters" />
       <module name="demo-rabbitmq" options="-parameters" />
       <module name="demo-redis" options="-parameters" />
+      <module name="demo-redisson" options="-parameters" />
       <module name="demo-retry" options="-parameters" />
       <module name="demo-saga-service" options="-parameters" />
       <module name="demo-saga-start" options="-parameters" />
