@@ -11,10 +11,10 @@ spring:
 eureka:
   client:
     enabled: true
-    fetch-registry: true
+    fetch-registry: false
     refresh:
       enable: true
-    register-with-eureka: true
+    register-with-eureka: false
     registry-fetch-interval-seconds: 30
     service-url:
       defaultZone: http://localhost:${server.port}/eureka

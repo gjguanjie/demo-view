@@ -19,4 +19,13 @@ public class LimiterController {
             return "bbb";
         }
     }
+
+    @GetMapping("/rest")
+    public String rest() {
+        if (Limiter.isLimit("rest")) {
+            return "aaa";
+        } else {
+            return "bbb";
+        }
+    }
 }
