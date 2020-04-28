@@ -38,6 +38,7 @@
         <module>demo-saga-service</module>
         <module>demo-redis</module>
         <module>demo-gateway</module>
+        <module>demo-redisson</module>
         <module>demo-fastdfs</module>
     </modules>
 
