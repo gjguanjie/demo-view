@@ -16,11 +16,8 @@ import org.csource.fastdfs.StorageServer;
 import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerServer;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.Null;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -28,8 +25,8 @@ class DemoFastdfsApplicationTests {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DemoFastdfsApplicationTests.class);
 
-    private static StorageClient1 storageClient1 = null;
-    private static String trackerServerUrl = null;
+    private static StorageClient1 storageClient1;
+    private static String trackerServerUrl;
 
     static {
         try {
