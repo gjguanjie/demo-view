@@ -1,8 +1,5 @@
 package com.cloud.utils;
 
-import javafx.util.Builder;
-import liquibase.pro.packaged.B;
-
 public class ResponseVO<T> {
 
     private String code = "success";
